@@ -1,11 +1,6 @@
 import moment, { Moment } from "moment";
 import { useState } from "react";
-import { DayInfo } from "../types";
-
-enum Week {
-  NEXT_WEEK,
-  PREV_WEEK,
-}
+import { DayInfo, Week } from "../types";
 
 interface getWeek {
   week: Array<DayInfo>;
@@ -29,26 +24,27 @@ function getCurrentWeek(now: Moment): Array<DayInfo> {
 }
 
 export default function useWeekDates(currentMoment = moment()): getWeek {
+  const [currentWeek] = useState(currentMoment);
   const [week, updateWeek] = useState<Array<DayInfo>>(
-    getCurrentWeek(currentMoment)
+    getCurrentWeek(currentWeek)
   );
-  const [month, updateMonth] = useState(currentMoment.format("MMMM"));
+  const [month, updateMonth] = useState(currentWeek.format("MMMM"));
   function navigateWeeks(navigator: Week) {
     switch (navigator) {
       case Week.NEXT_WEEK:
         updateWeek(() => {
-          return getCurrentWeek(currentMoment.add(1, "week"));
+          return getCurrentWeek(currentWeek.add(1, "week"));
         });
         break;
       case Week.PREV_WEEK:
         updateWeek(() => {
-          return getCurrentWeek(currentMoment.subtract(1, "week"));
+          return getCurrentWeek(currentWeek.subtract(1, "week"));
         });
         break;
     }
 
     updateMonth(() => {
-      return currentMoment.format("MMMM");
+      return currentWeek.format("MMMM");
     });
   }
   return { month, week, navigateWeeks };

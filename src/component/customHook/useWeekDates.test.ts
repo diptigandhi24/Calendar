@@ -124,4 +124,17 @@ describe("testing the hooks", () => {
     expect(result.current.week).toEqual([26, 27, 28, 29, 30, 1, 2]);
     expect(result.current.month).toBe("April - May");
   });
+
+  test("move forward and backward calender week", () => {
+    const { result } = renderHook(() => useWeekDates(moment("2021-04-22")));
+    act(() => {
+      /* fire events that update state */
+      result.current.navigateWeeks(Week.NEXT_WEEK);
+    });
+    act(() => {
+      /* fire events that update state */
+      result.current.navigateWeeks(Week.PREV_WEEK);
+    });
+    expect(result.current.week[0].dayOfMonth).toEqual(19);
+  });
 });
