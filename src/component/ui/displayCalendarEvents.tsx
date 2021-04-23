@@ -11,14 +11,14 @@ function TimeRowGrid() {
   for (let i = 1; i < 24; i++) {
     if (i < 10) {
       let row = (
-        <div className="time" style={{ gridRow: i }}>
+        <div key={`gridTimeRow${i}`} className="time" style={{ gridRow: i }}>
           0{i}:00
         </div>
       );
       timegrid.push(row);
     } else {
       let row = (
-        <div className="time" style={{ gridRow: i }}>
+        <div key={`gridTimeRow${i}`} className="time" style={{ gridRow: i }}>
           {i}:00
         </div>
       );
@@ -32,7 +32,9 @@ function RowGrid() {
   let rowGrid = [];
 
   for (let i = 1; i < 24; i++) {
-    let row = <div className="row" style={{ gridRow: i }}></div>;
+    let row = (
+      <div className="row" key={`gridRow${i}`} style={{ gridRow: i }}></div>
+    );
     rowGrid.push(row);
   }
   return rowGrid;
@@ -43,16 +45,24 @@ export default function DisplayCalenderEvents({ week }: DisplayEventsProps) {
     <div className="content">
       {TimeRowGrid()}
       <div className="filler-col"></div>
-      <div className="col" style={{ gridColumn: 3 }}></div>
-      <div className="col" style={{ gridColumn: 4 }}></div>
-      <div className="col" style={{ gridColumn: 5 }}></div>
-      <div className="col" style={{ gridColumn: 6 }}></div>
-      <div className="col" style={{ gridColumn: 7 }}></div>
-      <div className="col weekend" style={{ gridColumn: 8 }}></div>
-      <div className="col weekend" style={{ gridColumn: 9 }}></div>
+      <div key="gridColumn3" className="col" style={{ gridColumn: 3 }}></div>
+      <div key="gridColumn4" className="col" style={{ gridColumn: 4 }}></div>
+      <div key="gridColumn5" className="col" style={{ gridColumn: 5 }}></div>
+      <div key="gridColumn6" className="col" style={{ gridColumn: 6 }}></div>
+      <div key="gridColumn7" className="col" style={{ gridColumn: 7 }}></div>
+      <div
+        key="gridColumn8"
+        className="col weekend"
+        style={{ gridColumn: 8 }}
+      ></div>
+      <div
+        key="gridColumn9"
+        className="col weekend"
+        style={{ gridColumn: 9 }}
+      ></div>
       {RowGrid()}
       {week.map((day, colIndex) => {
-        return week[colIndex].eventOfDay.map((eventInfo) => {
+        return day.eventOfDay.map((eventInfo) => {
           let spanStart = parseInt(eventInfo.startTime);
           console.log(spanStart, eventInfo.startTime);
           let spanEnd =
@@ -60,6 +70,7 @@ export default function DisplayCalenderEvents({ week }: DisplayEventsProps) {
 
           return (
             <div
+              key={`${eventInfo.title}`}
               style={{
                 gridColumn: `${colIndex + 3}`,
                 gridRow: `${spanStart + 1}/span ${spanEnd}`,

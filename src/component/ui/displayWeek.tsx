@@ -46,7 +46,7 @@ export default function DisplayWeek({ week }: DisplayWeekProps) {
         <div className="filler"></div>
         {week.map((item, index) => {
           return (
-            <GridItem backgroundColorT={"#217346"}>
+            <GridItem key={`Weekbar${index}`} backgroundColorT={"#217346"}>
               <p>
                 {item.dayOfWeek}
                 <br></br>
