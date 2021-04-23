@@ -3,8 +3,11 @@ import DisplayWeek from "./displayWeek";
 import DisplayMonth from "./displayMonth";
 import { Week } from "../types";
 import Container from "@material-ui/core/Container";
+import DisplayCalenderEvents from "./displayCalendarEvents";
+import "./calender.css";
 
 export default function DisplayCalender() {
+  //this hook provides current, next, previous week update
   const { month, week, navigateWeeks } = useWeekDates();
 
   let handleNavigator = (week: Week) => {
@@ -23,6 +26,7 @@ export default function DisplayCalender() {
     >
       <DisplayMonth month={month} handleNavigator={handleNavigator} />
       <DisplayWeek week={week} />
+      <DisplayCalenderEvents week={week} />
     </Container>
   );
 }

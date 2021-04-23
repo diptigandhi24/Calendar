@@ -1,13 +1,15 @@
 import { renderHook, act } from "@testing-library/react-hooks";
 import useWeekDates from "./useWeekDates";
 import moment from "moment";
+
 enum Week {
   NEXT_WEEK,
   PREV_WEEK,
 }
 describe("testing the hooks", () => {
-  test("when the hook loads it returns the array of week", () => {
+  test("when the hook loads it returns the array of week", async () => {
     const { result } = renderHook(() => useWeekDates(moment("2021-04-22")));
+
     expect(result.current.week).toEqual([
       {
         dayOfMonth: 19,

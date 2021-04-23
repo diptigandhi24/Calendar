@@ -9,7 +9,7 @@ export enum Week {
 }
 export interface CalendarEvent {
   title: string;
-  start_time: string;
-  end_time: string;
+  startTime: string;
+  endTime: string;
   date: string;
 }
