@@ -1,6 +1,7 @@
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
 import { Week } from "../types";
+
 interface DisplayMonthProps {
   month: string;
   handleNavigator: (navigator: Week) => void;

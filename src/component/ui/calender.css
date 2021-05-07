@@ -9,8 +9,10 @@ body {
 .container {
   width: 100%;
   display: grid;
-  grid-template-rows: 3em 3em auto;
+  grid-template-rows: 3em 5em auto;
   position: absolute;
+  padding: 0px 24px;
+  margin: 0px 15%;
 }
 
 .title {

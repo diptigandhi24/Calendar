@@ -1,4 +1,3 @@
-import SelectInput from "@material-ui/core/Select/SelectInput";
 import * as lf from "lovefield";
 
 let dbInit = new Promise((resolve) => {
@@ -29,47 +28,46 @@ export async function insertData() {
     "Whose length is: ",
     results.length
   );
-  if (results.length === 0) {
+  let sampleData = [
+    {
+      id: 1,
+      title: "event1",
+      startTime: "11:00",
+      endTime: "12:00",
+      date: "19-4-2021",
+    },
+    {
+      id: 2,
+      title: "event2",
+      startTime: "14:00",
+      endTime: "16:00",
+      date: "19-4-2021",
+    },
+    {
+      id: 3,
+      title: "event3",
+      startTime: "11:00",
+      endTime: "12:00",
+      date: "22-4-2021",
+    },
+    {
+      id: 4,
+      title: "event4",
+      startTime: "11:00",
+      endTime: "12:00",
+      date: "26-4-2021",
+    },
+    {
+      id: 5,
+      title: "event5",
+      startTime: "13:00",
+      endTime: "15:00",
+      date: "28-4-2021",
+    },
+  ];
+  if (results.length <= sampleData) {
     eventsDb = db;
     let events = db.getSchema().table("Events");
-
-    let sampleData = [
-      {
-        id: 1,
-        title: "event1",
-        startTime: "11:00",
-        endTime: "12:00",
-        date: "19-4-2021",
-      },
-      {
-        id: 2,
-        title: "event2",
-        startTime: "14:00",
-        endTime: "16:00",
-        date: "19-4-2021",
-      },
-      {
-        id: 3,
-        title: "event3",
-        startTime: "11:00",
-        endTime: "12:00",
-        date: "22-4-2021",
-      },
-      {
-        id: 4,
-        title: "event4",
-        startTime: "11:00",
-        endTime: "12:00",
-        date: "26-4-2021",
-      },
-      {
-        id: 5,
-        title: "event5",
-        startTime: "13:00",
-        endTime: "15:00",
-        date: "28-4-2021",
-      },
-    ];
 
     sampleData.forEach((item) => newRows.push(events.createRow(item)));
 

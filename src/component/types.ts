@@ -2,6 +2,7 @@ export interface DayInfo {
   dayOfMonth: number;
   dayOfWeek: string;
   eventOfDay: Array<CalendarEvent>;
+  currentDay: boolean;
 }
 export enum Week {
   NEXT_WEEK,

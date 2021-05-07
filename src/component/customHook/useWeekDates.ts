@@ -1,4 +1,4 @@
-import moment, { Moment } from "moment";
+import moment, { invalid, Moment } from "moment";
 import { useState, useEffect } from "react";
 import { DayInfo, Week } from "../types";
 import { insertData, selectDataFromDb } from "../schema/createSchema";
@@ -11,12 +11,13 @@ interface getWeek {
 
 async function getCurrentWeek(now: Moment): Promise<Array<DayInfo>> {
   let datesArr = [];
-  now.startOf("isoWeek");
+  console.log("start of the week", now.date(), now.startOf("isoWeek").date());
   for (let i = 0; i < 7; i++) {
     datesArr.push({
       dayOfMonth: now.date(),
       dayOfWeek: now.format("dddd"),
       eventOfDay: await selectDataFromDb(now.format("D-M-YYYY")),
+      currentDay: moment().isSame(now, "day"),
     });
 
     // Don't move to the next week
@@ -28,10 +29,24 @@ async function getCurrentWeek(now: Moment): Promise<Array<DayInfo>> {
   return datesArr;
 }
 
+export function getCurrentMonth(now: Moment): string {
+  let monthCount: string = now.startOf("isoWeek").format("MMMM");
+  let monthOfTheWeek: string = monthCount;
+  for (let i = 0; i <= 6; i++) {
+    console.log("monthCount", monthCount, "currentMonth", now.format("MMMM"));
+    if (monthCount !== now.format("MMMM")) {
+      monthCount = now.format("MMMM");
+      monthOfTheWeek = `${monthOfTheWeek}-${monthCount}`;
+    }
+    now.add(1, "day");
+  }
+  return monthOfTheWeek;
+}
+
 export default function useWeekDates(initialMoment = moment()): getWeek {
   const [currentMoment, updateCurrentMoment] = useState(initialMoment);
-
   const [week, updateWeek] = useState<Array<DayInfo>>([]);
+  const [month, updateMonth] = useState(currentMoment.format("MMMM"));
 
   useEffect(() => {
     insertData();
@@ -39,9 +54,10 @@ export default function useWeekDates(initialMoment = moment()): getWeek {
 
   useEffect(() => {
     getCurrentWeek(currentMoment).then((result) => updateWeek(result));
+    let month = getCurrentMonth(moment(currentMoment));
+    console.log("UseEffect Month", month);
+    updateMonth(month);
   }, [currentMoment]);
-
-  const [month, updateMonth] = useState(currentMoment.format("MMMM"));
 
   function navigateWeeks(navigator: Week) {
     switch (navigator) {
